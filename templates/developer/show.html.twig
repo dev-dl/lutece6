@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>{% block title %}{{ developer }}'s portfolio{% endblock %}</title>
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+{% block body %}
+    
+    
+    <!-- navbar -->
+	<div class="container-xl navbar-custom">
+		<nav class="navbar navbar-expand-md navbar-custom navbar-light ">
+			<a class="navbar-brand" href="...">Lutèce6</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		    </button>
+			<div id="navbarContent" class="collapse navbar-collapse">
+				<ul class="navbar-nav">
+					<li>
+						<a class="nav-link" href="...">projects</a>
+					</li>
+			        <li>	
+			        	<a class="nav-link" href="...">about <strike>us</strike> me</a>
+			        </li>
+			       	<li>
+						<a class="nav-link" href="...">connexion</a>
+					</li>
+				</ul>
+			</div>    
+		</nav>
+	</div>
+
+    <h2> Hello </h2>
+
+
+
+	<div class="container-xl circle-img">
+		<div class="row">
+			<div class = "col-sm-1 h-100 text-center ">
+				<img class=" rounded-circle img-fluid photosize" src="lin.jpg" alt="..." >
+                {{ developer }}
+			</div>
+			<div class ="col-sm-5">
+				<p>
+					{{ developer.description}}
+				</p>	
+			</div>
+			<div class ="col-sm-5">
+				<p>
+					{{ developer.socialNetwork}}
+				</p>
+			</div>
+		</div>
+	</div>
+
+    	<div class="container-xl">
+		<div class="row">
+			<div class = "col-sm developerPageCard text-center ">
+
+                {% for skill in skillsets %}
+                    <p class = "skill_color_1"> {{skill}} {{skill.percentage}} </p>
+                {%endfor%}    
+			</div>
+			<div class = "col-sm developerPageCard">
+				{% for activity in activities %}
+                    <p class = "skill_color_2"> {{activity.project}} </p>
+        {%endfor%}
+			</div>
+			<div class = "col-sm   text-center">
+				
+				<h4 class = "teammates_titre">My teammates</h4>
+				<ul class="list-group" >
+					<li class="list-group-item">
+					</li >
+					<li class="list-group-item">
+					</li>
+					<li class="list-group-item">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

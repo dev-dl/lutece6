@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{% endblock %}
+
+{% block body %}
+    <h2> Hello </h2>
+    {% for developer in developers %}
+        <h4> {{ developer }} </h4>
+        <p> 
+            <a href=" {{ path('developer',{ slug: developer.slug})}} "> View </a>
+        </p>
+    {% endfor %}    
+{% endblock %}
