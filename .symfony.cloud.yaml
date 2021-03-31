@@ -9,11 +9,11 @@ runtime:
         - sodium
         - iconv
         - ctype
-	- pdo_pgsql
+        - pdo_pgsql
         
 
 relationships:
-	database: "db:postgresql"
+         database: "db:postgresql"
 
 #variables:
 #    php:
