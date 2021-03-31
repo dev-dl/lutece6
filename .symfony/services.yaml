@@ -1,4 +1,4 @@
 db:
-	type: postgresql:11
-	disk: 1024
-	size: S
+   type: postgresql:11
+   disk: 1024
+   size: S
