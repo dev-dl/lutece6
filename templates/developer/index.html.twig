@@ -9,5 +9,6 @@
         <p> 
             <a href=" {{ path('developer',{ slug: developer.slug})}} "> View </a>
         </p>
-    {% endfor %}    
+    {% endfor %}  
+    {{ form(developer_sign_up_form)}}  
 {% endblock %}
