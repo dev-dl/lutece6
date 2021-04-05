@@ -39,6 +39,11 @@ class Activity
      */
     private $developer;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
 
     public function getId(): ?int
     {
@@ -92,4 +97,18 @@ class Activity
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
 }
