@@ -7,16 +7,17 @@ use App\Repository\ActivityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
-class DeveloperManagementController extends AbstractController
+class SettingController extends AbstractController
 {
     /**
-     * @Route("/developer_management", name="developer_management")
+     * @Route("/setting", name="setting")
      */
     public function index(): Response
     {
-        return $this->render('developer_management/index.html.twig', [
-            'controller_name' => 'DeveloperManagementController',
+        return $this->render('setting/index.html.twig', [
+            'controller_name' => 'SettingController',
         ]);
     }
 }

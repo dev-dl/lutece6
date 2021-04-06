@@ -23,8 +23,6 @@ class DeveloperController extends AbstractController
     }
 
 
-
-
     /**
      * @Route("/developer", name="developer_index")
      */
@@ -37,8 +35,6 @@ class DeveloperController extends AbstractController
             'developers' => $developerRepository->findAll(),
             'developer_sign_up_form' => $form->createView()
         ]));
-
-
         
     }
 
