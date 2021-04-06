@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "node-sass": "^4.13"
+        "node-sass": "^4.13",
+        "yarn": "^1.22.10"
     }
 }

@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class ActivityCrudController extends AbstractCrudController
 {
@@ -40,7 +41,8 @@ class ActivityCrudController extends AbstractCrudController
         yield AssociationField::new('project');
         yield AssociationField::new('developer');
         yield TextField::new('skill');
-        yield IntegerField::new('time_used');
+        yield IntegerField::new('time_used');        
+        yield DateTimeField::new('createdAt');
     }
     
 }

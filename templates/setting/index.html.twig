@@ -1,15 +1,45 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block title %}Hello SettingController!{% endblock %}
+        <title> yo </title>
 
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+                <!-- navbar -->
+            <div class="container-xl navbar-custom">
+                <nav class="navbar navbar-expand-md navbar-custom navbar-light ">
+                    <a class="navbar-brand" href="...">Lutèce6</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="navbarContent" class="collapse navbar-collapse">
+                        <ul class="navbar-nav">
+                            <li>
+                                <a class="nav-link" href="...">projects</a>
+                            </li>
+                            <li>	
+                                <a class="nav-link" href="...">about <strike>us</strike> me</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="...">connexion</a>
+                            </li>
+                        </ul>
+                    </div>    
+                </nav>
+            </div>
 <div class="example-wrapper">
-    <h1>Hello yo {{ controller_name }}! ✅</h1>
+    <h1>Hello yoi ✅</h1>
 
     This friendly message is coming from:
 

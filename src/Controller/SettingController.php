@@ -11,13 +11,34 @@ use Twig\Environment;
 
 class SettingController extends AbstractController
 {
+
+    private $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+    
     /**
      * @Route("/setting", name="setting")
      */
-    public function index(): Response
+    public function index()
     {
-        return $this->render('setting/index.html.twig', [
+        return new Response($this->twig->render('setting/index.html.twig', [
             'controller_name' => 'SettingController',
-        ]);
+        ]));
     }
+
+    /**
+     * @Route("/setting/profil", name="setting_profil")
+     */
+    public function editProfil()
+    {
+        return new Response($this->twig->render('setting/editProfil.html.twig', [
+            'controller_name' => 'SettingController',
+        ]));
+    }
+
+
+
 }
