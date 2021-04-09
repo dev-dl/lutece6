@@ -25,14 +25,10 @@ class Developer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,7 +36,7 @@ class Developer
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
@@ -75,6 +71,11 @@ class Developer
      * @ORM\OneToMany(targetEntity=SkillSet::class, mappedBy="developer", orphanRemoval=true)
      */
     private $skillSet;
+
+    /**
+     * @ORM\OneToOne(targetEntity=DeveloperAuths::class, mappedBy="developer_id", cascade={"persist", "remove"})
+     */
+    private $developerAuths;
     
     public function __construct()
     {
@@ -104,17 +105,6 @@ class Developer
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 
     public function getLastName(): ?string
     {
@@ -252,6 +242,23 @@ class Developer
                 $skillSet->setDeveloper(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeveloperAuths(): ?DeveloperAuths
+    {
+        return $this->developerAuths;
+    }
+
+    public function setDeveloperAuths(DeveloperAuths $developerAuths): self
+    {
+        // set the owning side of the relation if necessary
+        if ($developerAuths->getDeveloperId() !== $this) {
+            $developerAuths->setDeveloperId($this);
+        }
+
+        $this->developerAuths = $developerAuths;
 
         return $this;
     }
