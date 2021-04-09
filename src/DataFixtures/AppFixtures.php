@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $lin_guo = new Developer();
-        $lin_guo -> setDeveloperName('Lin GUO');
+        $lin_guo -> setrLastName('Lin GUO');
         $lin_guo -> setEmail('lin@mail.com');
         $lin_guo -> setSocialNetwork('twitter, github');
         $manager->persist($lin_guo);

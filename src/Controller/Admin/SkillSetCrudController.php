@@ -22,7 +22,7 @@ class SkillSetCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud
-            ->setSearchFields(['skill','developer.developerName'])
+            ->setSearchFields(['skill','developer.lastName'])
             ->setDefaultSort(['percentage' => 'DESC']);
     }
 

@@ -13,6 +13,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
+
 class DashboardController extends AbstractDashboardController
 {
     /**
@@ -39,4 +42,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Activity', 'fa fa-hourglass-end', Activity::class);
         yield MenuItem::linkToCrud('SkillSet', 'fa fa-motorcycle', SkillSet::class);
     }
+
+    
+
 }

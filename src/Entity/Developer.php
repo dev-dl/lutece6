@@ -9,11 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
+
 /**
  * @ORM\Entity(repositoryClass=DeveloperRepository::class)
  * @UniqueEntity("slug")
  */
-class Developer
+class Developer 
 {
     /**
      * @ORM\Id
@@ -25,7 +27,22 @@ class Developer
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $developerName;
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -37,10 +54,7 @@ class Developer
      */
     private $socialNetwork;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $email;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -48,20 +62,20 @@ class Developer
     private $photoFileName;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
+    /**
      * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="developer", orphanRemoval=true)
      */
     private $activity;
-
+   
     /**
      * @ORM\OneToMany(targetEntity=SkillSet::class, mappedBy="developer", orphanRemoval=true)
      */
     private $skillSet;
-
-    /**
-     * @ORM\Column(type="string", length=255,unique=true, nullable=true)
-     */
-    private $slug;
-
+    
     public function __construct()
     {
         $this->activity = new ArrayCollection();
@@ -70,7 +84,7 @@ class Developer
 
     public function __toString(): string 
     {
-        return $this->developerName;
+        return $this->firstName.' '.$this->lastName;
     }
 
     public function getId(): ?int
@@ -78,14 +92,50 @@ class Developer
         return $this->id;
     }
 
-    public function getDeveloperName(): ?string
+    public function getEmail(): ?string
     {
-        return $this->developerName;
+        return $this->email;
     }
 
-    public function setDeveloperName(string $developerName): self
+    public function setEmail(string $email): self
     {
-        $this->developerName = $developerName;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -114,17 +164,6 @@ class Developer
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(?string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getPhotoFileName(): ?string
     {
@@ -136,6 +175,25 @@ class Developer
         $this->photoFileName = $photoFileName;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if(!$this->slug || '-'===$this->slug){
+            $this->slug =(string) $slugger->slug((string) $this)->lower();
+        }
     }
 
     /**
@@ -196,24 +254,5 @@ class Developer
         }
 
         return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function computeSlug(SluggerInterface $slugger)
-    {
-        if(!$this->slug || '-'===$this->slug){
-            $this->slug =(string) $slugger->slug((string) $this)->lower();
-        }
     }
 }

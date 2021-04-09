@@ -14,7 +14,7 @@ class DeveloperSignUpType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('developerName', null, ['label' => 'Your name',])
+            ->add('lastName', null, ['label' => 'Your name',])
             ->add('email', EmailType::class)
             ->add('submit', SubmitType::class)
         ;

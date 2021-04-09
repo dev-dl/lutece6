@@ -23,7 +23,7 @@ class ActivityCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud
-            ->setSearchFields(['skill','developer.developerName','project.projectName'])
+            ->setSearchFields(['skill','developer.lastName','project.projectName'])
             ->setDefaultSort(['time_used' => 'DESC']);
     }
 

@@ -45,6 +45,9 @@ class Activity
     private $createdAt;
 
 
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +112,7 @@ class Activity
 
         return $this;
     }
+
 
 
 }
