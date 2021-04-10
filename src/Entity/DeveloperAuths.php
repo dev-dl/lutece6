@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=DeveloperAuthsRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class DeveloperAuths implements UserInterface, \Serializable
+class DeveloperAuths implements UserInterface
 {
     /**
      * @ORM\Id
@@ -26,20 +26,12 @@ class DeveloperAuths implements UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Developer::class, inversedBy="developerAuths", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $developer_id;
 
     /**
      * @ORM\Column(type="boolean")
@@ -65,7 +57,7 @@ class DeveloperAuths implements UserInterface, \Serializable
 
     public function getPassword(): ?string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -75,21 +67,22 @@ class DeveloperAuths implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getDeveloperId(): ?Developer
+
+
+    public function getRoles(): array
     {
-        return $this->developer_id;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setDeveloperId(Developer $developer_id): self
+    public function setRoles(array $roles): self
     {
-        $this->developer_id = $developer_id;
+        $this->roles = $roles;
 
         return $this;
-    }
-
-
-    public function getRoles()
-    {
     }
 
 
@@ -107,26 +100,6 @@ class DeveloperAuths implements UserInterface, \Serializable
         return $this->email;
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized, array('allowed_classes' => false));
-    }
 
     public function isVerified(): bool
     {

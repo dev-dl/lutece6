@@ -72,10 +72,6 @@ class Developer
      */
     private $skillSet;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DeveloperAuths::class, mappedBy="developer_id", cascade={"persist", "remove"})
-     */
-    private $developerAuths;
     
     public function __construct()
     {
@@ -246,20 +242,5 @@ class Developer
         return $this;
     }
 
-    public function getDeveloperAuths(): ?DeveloperAuths
-    {
-        return $this->developerAuths;
-    }
 
-    public function setDeveloperAuths(DeveloperAuths $developerAuths): self
-    {
-        // set the owning side of the relation if necessary
-        if ($developerAuths->getDeveloperId() !== $this) {
-            $developerAuths->setDeveloperId($this);
-        }
-
-        $this->developerAuths = $developerAuths;
-
-        return $this;
-    }
 }
