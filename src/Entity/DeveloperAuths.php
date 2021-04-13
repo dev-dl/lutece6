@@ -38,6 +38,13 @@ class DeveloperAuths implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Developer::class, inversedBy="developerAuthsId", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $developer_id;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,4 +119,18 @@ class DeveloperAuths implements UserInterface
 
         return $this;
     }
+
+    public function getDeveloperId(): ?Developer
+    {
+        return $this->developer_id;
+    }
+
+    public function setDeveloperId(Developer $developer_id): self
+    {
+        $this->developer_id = $developer_id;
+
+        return $this;
+    }
+
+
 }

@@ -9,7 +9,7 @@
 	<div class="container-xl circle-img">
 		<div class="row">
 			<div class = "col-sm-1 h-100 text-center ">
-				<img class=" rounded-circle img-fluid photosize" src="lin.jpg" alt="..." >
+				<img class=" rounded-circle img-fluid photosize" src="/uploads/photos/lin.jpg" alt="..." >
                 {{ developer }}
 			</div>
 			<div class ="col-sm-5">
@@ -17,10 +17,13 @@
 					{{ developer.description}}
 				</p>	
 			</div>
-			<div class ="col-sm-5">
+			<div class ="col-sm-3">
 				<p>
 					{{ developer.socialNetwork}}
 				</p>
+			</div>
+			<div class ="col-sm-2">
+					<a  href=" {{ path('app_login')}} ">Message</a>
 			</div>
 		</div>
 	</div>
