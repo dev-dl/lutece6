@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DeveloperAuths;
+use App\Entity\Developer;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Repository\DeveloperAuthsRepository;
@@ -24,6 +25,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new DeveloperAuths();
+        $developer = new Developer();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -36,7 +38,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $developer->setEmail($form->get('email')->getData());
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($developer);
             $entityManager->persist($user);
             $entityManager->flush();
 

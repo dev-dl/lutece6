@@ -26,13 +26,13 @@ class Developer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
@@ -59,7 +59,7 @@ class Developer
     private $photoFileName;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true , nullable=true)
      */
     private $slug;
 
@@ -89,8 +89,12 @@ class Developer
     }
 
     public function __toString(): string 
-    {
-        return $this->firstName.' '.$this->lastName;
+    {   
+        if (!$this->firstName and !$this->lastName){
+            return $this->email;
+        }else{
+            return $this->firstName.' '.$this->lastName;
+        }
     }
 
     public function getId(): ?int
@@ -272,6 +276,7 @@ class Developer
     {
         $this->createdAt = new \DateTimeImmutable();
     }
+
 
 
 }
