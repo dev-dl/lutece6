@@ -33,7 +33,6 @@ class DeveloperController extends AbstractController
 
         return new Response($this->twig->render('developer/index.html.twig',[
             'developers' => $developerRepository->findAll(),
-            'developer_sign_up_form' => $form->createView()
         ]));
         
     }
@@ -51,18 +50,6 @@ class DeveloperController extends AbstractController
         ]));
     }
 
-    /**
-     * @Route("/developer_sign_up", name="developer_sign_up")
-     */
-    public function sign_up( DeveloperRepository $developerRepository)
-    {
-        $newDeveloperSignUp = new Developer();
-        $form = $this->createForm(DeveloperSignUpType::class, $newDeveloperSignUp);
-
-        return new Response($this->twig->render('developer/sign_up.html.twig',[
-            'developer_sign_up_form' => $form->createView()
-        ]));
-        
-    }    
+  
 
 }
