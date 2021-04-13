@@ -13,6 +13,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=DeveloperRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("slug")
  */
 class Developer 
@@ -58,7 +59,7 @@ class Developer
     private $photoFileName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -72,10 +73,6 @@ class Developer
      */
     private $skillSet;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DeveloperAuths::class, mappedBy="developer_id", cascade={"persist", "remove"})
-     */
-    private $developerAuthsId;
 
     /**
      * @ORM\Column(type="datetime")
@@ -254,22 +251,7 @@ class Developer
         return $this;
     }
 
-    public function getDeveloperAuthsId(): ?DeveloperAuths
-    {
-        return $this->developerAuthsId;
-    }
 
-    public function setDeveloperAuthsId(DeveloperAuths $developerAuthsId): self
-    {
-        // set the owning side of the relation if necessary
-        if ($developerAuthsId->getDeveloperId() !== $this) {
-            $developerAuthsId->setDeveloperId($this);
-        }
-
-        $this->developerAuthsId = $developerAuthsId;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -283,7 +265,13 @@ class Developer
         return $this;
     }
 
-
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
 
 }

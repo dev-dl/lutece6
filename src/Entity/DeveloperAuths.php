@@ -7,9 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @ORM\Entity(repositoryClass=DeveloperAuthsRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\HasLifecycleCallbacks()
  */
 class DeveloperAuths implements UserInterface
 {
@@ -38,11 +40,7 @@ class DeveloperAuths implements UserInterface
      */
     private $isVerified = false;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Developer::class, inversedBy="developerAuthsId", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $developer_id;
+
 
 
     public function getId(): ?int
@@ -120,17 +118,6 @@ class DeveloperAuths implements UserInterface
         return $this;
     }
 
-    public function getDeveloperId(): ?Developer
-    {
-        return $this->developer_id;
-    }
-
-    public function setDeveloperId(Developer $developer_id): self
-    {
-        $this->developer_id = $developer_id;
-
-        return $this;
-    }
 
 
 }
