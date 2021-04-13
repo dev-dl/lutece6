@@ -77,6 +77,11 @@ class Developer
      */
     private $developerAuthsId;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
 
 
     
@@ -262,6 +267,18 @@ class Developer
         }
 
         $this->developerAuthsId = $developerAuthsId;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
