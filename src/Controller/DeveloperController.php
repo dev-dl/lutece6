@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Developer;
-use App\Form\DeveloperSignUpType;
 use App\Repository\SkillSetRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\DeveloperRepository;
@@ -28,8 +27,7 @@ class DeveloperController extends AbstractController
      */
     public function index( DeveloperRepository $developerRepository)
     {
-        $newDeveloperSignUp = new Developer();
-        $form = $this->createForm(DeveloperSignUpType::class, $newDeveloperSignUp);
+
 
         return new Response($this->twig->render('developer/index.html.twig',[
             'developers' => $developerRepository->findAll(),
