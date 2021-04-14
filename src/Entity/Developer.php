@@ -91,9 +91,9 @@ class Developer
     public function __toString(): string 
     {   
         if (!$this->firstName and !$this->lastName){
-            return $this->email.$this->createdAt->format('Ymd');
+            return $this->email;
         }else{
-            return $this->firstName.' '.$this->lastName.$this->createdAt->format('Ymd');
+            return $this->firstName.' '.$this->lastName;
         }
     }
 
@@ -191,7 +191,7 @@ class Developer
     public function computeSlug(SluggerInterface $slugger)
     {
         if(!$this->slug || '-'===$this->slug){
-            $this->slug =(string) $slugger->slug((string) $this)->lower();
+            $this->slug =(string) $slugger->slug((string) $this)->lower().$this->createdAt->format('Ymd');
         }
     }
 
