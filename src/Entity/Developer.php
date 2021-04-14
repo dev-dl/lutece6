@@ -91,9 +91,9 @@ class Developer
     public function __toString(): string 
     {   
         if (!$this->firstName and !$this->lastName){
-            return $this->email;
+            return $this->email.$this->createdAt->format('Ymd');
         }else{
-            return $this->firstName.' '.$this->lastName;
+            return $this->firstName.' '.$this->lastName.$this->createdAt->format('Ymd');
         }
     }
 
