@@ -8,8 +8,12 @@ Using :
 PHP framwork : Symfony 5
 local database: postgreSql
 
-To do list:
+## To do list:
+### functionality
 - [x] create developer entity class and the database
+- [x] compute slug 
+  - [x] slug = lastName + firstName or emailadress (if lasName & firstName == null)
+  - [ ] update slug (after adding lastName and firstName)
 - [x] developer personal page
 - [ ] deployment
   - [ ] PaaS
@@ -19,10 +23,18 @@ To do list:
 - [x] login form
 - [ ] edit profil page
 
+### database
+- [x] developer and developer_auths
+  - [x] developer : user informations : lastName, firstName, profilImageName, description
+  - [x] developer_auths : developerId, password, login with googlemail, facebook etc
+- [ ] project
+- [ ] activity
 
 
 
 Books reading
+- [ ] Programming for PaaS - Lucas Carlson
 - [ ] Designing Data-Intensive Applications - Martin Kleppmann
+ 
 
 What it looks like now :
