@@ -37,7 +37,7 @@ local database: postgreSql
 
 
 Books reading
-- [ ] Programming for PaaS - Lucas Carlson
+- [x] Programming for PaaS - Lucas Carlson
 - [ ] Designing Data-Intensive Applications - Martin Kleppmann
  
 
