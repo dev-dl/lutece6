@@ -22,7 +22,7 @@ local database: postgreSql
 - [ ] deployment
   - [ ] PaaS
     - [ ] <s>Symfony cloud</s> ->too expensive
-    - [ ] <s>Platform.sh</s> ->need to know more about PaaS
+    - [ ] <s>Platform.sh</s> -> Platform don't support docker, need to know more about PaaS
 - [x] register form
 - [x] login form
 - [ ] edit profil page
