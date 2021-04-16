@@ -6,6 +6,7 @@ First Version:
 
 Using :
 PHP framwork : Symfony 5
+
 local database: postgreSql
 
 ## To do list:
@@ -38,3 +39,4 @@ Books reading
  
 
 What it looks like now :
+https://github.com/dev-dl/symfony_project_lutece/tree/master/images_readme
