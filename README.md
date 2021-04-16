@@ -16,7 +16,7 @@ local database: postgreSql
 ### functionality
 - [x] create developer entity class and the database
 - [x] compute slug 
-  - [x] slug = lastName + firstName or emailadress (if lasName & firstName == null)
+  - [x] slug = lastName + firstName+createdAt or emailadress+createdAt (if lasName & firstName == null)
   - [ ] update slug (after adding lastName and firstName)
 - [x] developer personal page
 - [ ] deployment
