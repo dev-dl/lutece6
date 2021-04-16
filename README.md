@@ -9,4 +9,20 @@ PHP framwork : Symfony 5
 local database: postgreSql
 
 To do list:
-- [ ] create developer entity class
+- [x] create developer entity class and the database
+- [x] developer personal page
+- [ ] deployment
+  - [ ] PaaS
+    - [ ] <s>Symfony cloud</s> ->too expensive
+    - [ ] <s>Platform.sh</s> ->need to know more about PaaS
+- [x] register form
+- [x] login form
+- [ ] edit profil page
+
+
+
+
+Books reading
+- [ ] Designing Data-Intensive Applications - Martin Kleppmann
+
+What it looks like now :
