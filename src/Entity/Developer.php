@@ -26,7 +26,7 @@ class Developer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -78,6 +78,8 @@ class Developer
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+
 
 
 
@@ -276,6 +278,8 @@ class Developer
     {
         $this->createdAt = new \DateTimeImmutable();
     }
+
+
 
 
 

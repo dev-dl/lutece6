@@ -25,7 +25,6 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new DeveloperAuths();
-        $developer = new Developer();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -38,12 +37,11 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $developer->setEmail($form->get('email')->getData());
-
+            
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($developer);
             $entityManager->persist($user);
             $entityManager->flush();
+          
 
             return $this->redirectToRoute('setting');
         }

@@ -7,18 +7,23 @@ use App\Repository\SkillSetRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
+use App\Form\CreateDeveloperFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
 class DeveloperController extends AbstractController
 {
     private $twig;
+    private $entityManager;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
     {
         $this->twig = $twig;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -46,6 +51,30 @@ class DeveloperController extends AbstractController
             'skillsets' => $skillSetRepository->findBy(['developer' => $developer]),
             'activities' => $activities
         ]));
+    }
+
+    /**
+     *  @Route("/create_developer", name="create_eveloper")
+     */
+    public function create_developer(Request $request)
+    {   
+        $newDeveloperAccount = new Developer();
+        $form = $this->createForm(CreateDeveloperFormType::class, $newDeveloperAccount);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newDeveloperAccount=$form->getData();
+            $this->entityManager->persist($newDeveloperAccount);
+            $this->entityManager->flush();
+          
+
+            return $this->redirectToRoute('developer',['slug' =>$newDeveloperAccount->getSlug()]);
+        }
+
+        return $this->render('developer/createDeveloperAccount.html.twig', [
+            'create_form' => $form->createView(),
+        ]);
+
     }
 
   

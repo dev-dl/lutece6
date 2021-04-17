@@ -40,6 +40,12 @@ class DeveloperAuths implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $developerId;
+
+
 
 
 
@@ -114,6 +120,18 @@ class DeveloperAuths implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDeveloperId(): ?int
+    {
+        return $this->developerId;
+    }
+
+    public function setDeveloperId(int $developerId): self
+    {
+        $this->developerId = $developerId;
 
         return $this;
     }
