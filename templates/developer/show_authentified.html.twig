@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    
+
+
+
+	<div class="container-xl circle-img">
+		<div class="row">
+			<div class = "col-sm-1 h-100 text-center ">
+				<img class=" rounded-circle img-fluid photosize" src="/uploads/photos/lin.jpg" alt="..." >
+                {{ developer }}
+			</div>
+			<div class ="col-sm-5">
+				<p>
+					{{ developer.description}}
+				</p>	
+			</div>
+			<div class ="col-sm-3">
+				<p>
+					{{ developer.socialNetwork}}
+				</p>
+			</div>
+			<div class ="col-sm-2">
+					<a  href=" {{ path('app_login')}} ">Message</a>
+			</div>
+		</div>
+	</div>
+
+    	<div class="container-xl">
+		<div class="row">
+			<div class = "col-sm developerPageCard text-center ">
+
+                {% for skill in skillsets %}
+                    <p class = "skill_color_1"> {{skill}} {{skill.percentage}} </p>
+                {%endfor%}    
+			</div>
+			<div class = "col-sm developerPageCard">
+				{% for activity in activities %}
+                    <p class = "skill_color_2"> {{activity.project}} </p>
+        {%endfor%}
+			</div>
+			<div class = "col-sm   text-center">
+				
+				<h4 class = "teammates_titre">My teammates</h4>
+				<ul class="list-group" >
+					<li class="list-group-item">
+					</li >
+					<li class="list-group-item">
+					</li>
+					<li class="list-group-item">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
