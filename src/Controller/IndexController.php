@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/home", name="home")
      */
-    public function index(): Response
+    public function home(): Response
     {        
                
         return $this->render('index/index.html.twig', [
@@ -21,9 +21,9 @@ class IndexController extends AbstractController
     }
 
     /**
-    * @Route("/home", name="home")
+    * @Route("/", name="index")
      */
-    public function home(): Response
+    public function index(): Response
     {                        
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         return $this->render('index/index_authenticated.html.twig', [
