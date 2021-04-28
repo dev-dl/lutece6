@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @method DeveloperAuths|null find($id, $lockMode = null, $lockVersion = null)
- * @method DeveloperAuths|null findOneBy(array $criteria, array $orderBy = null)
- * @method DeveloperAuths[]    findAll()
- * @method DeveloperAuths[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method UserAuths|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserAuths|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserAuths[]    findAll()
+ * @method UserAuths[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DeveloperAuthsRepository extends ServiceEntityRepository
+class UserAuthsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DeveloperAuths::class);
+        parent::__construct($registry, UserAuths::class);
     }
 
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
@@ -33,7 +33,7 @@ class DeveloperAuthsRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
     // /**
-    //  * @return DeveloperAuths[] Returns an array of DeveloperAuths objects
+    //  * @return UserAuths[] Returns an array of UserAuths objects
     //  */
     /*
     public function findByExampleField($value)
@@ -50,7 +50,7 @@ class DeveloperAuthsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?DeveloperAuths
+    public function findOneBySomeField($value): ?UserAuths
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')

@@ -26,8 +26,10 @@ class IndexController extends AbstractController
     public function index(): Response
     {                        
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
+        $user = $this->getUser();
         return $this->render('index/index_authenticated.html.twig', [
-            'controller_name' => 'IndexController',]);       
+            'controller_name' => 'IndexController',
+            'email' => $user->getUsername()]);       
            
     }
 

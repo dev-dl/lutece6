@@ -3,10 +3,10 @@
 
 namespace App\Controller;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
-use App\Repository\DeveloperAuthsRepository;
+use App\Repository\UserAuthsRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
      
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = new DeveloperAuths();
+        $user = new UserAuths();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      
-    public function verifyUserEmail(Request $request, DeveloperAuthsRepository $developerAuthsRepository): Response
+    public function verifyUserEmail(Request $request, UserAuthsRepository $UserAuthsRepository): Response
     {
         $id = $request->get('id');
 
@@ -79,7 +79,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $user = $developerAuthsRepository->find($id);
+        $user = $UserAuthsRepository->find($id);
 
         if (null === $user) {
             return $this->redirectToRoute('app_register');

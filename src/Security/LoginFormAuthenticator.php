@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +67,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(DeveloperAuths::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(UserAuths::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error

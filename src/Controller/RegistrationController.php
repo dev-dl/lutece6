@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use App\Entity\Developer;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
-use App\Repository\DeveloperAuthsRepository;
+use App\Repository\UserAuthsRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,8 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = new DeveloperAuths();
+        $user = new UserAuths();
+        $developer = new Developer();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -37,8 +38,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            
+            $developer->setEmail($form->get('email')->getData());
             $entityManager = $this->getDoctrine()->getManager();
+            
+            $entityManager->persist($developer);
+            $entityManager->flush();
+            $user->setUserId($developer->getId());
             $entityManager->persist($user);
             $entityManager->flush();
           

@@ -2,18 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\DeveloperAuthsRepository;
+use App\Repository\UserAuthsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
- * @ORM\Entity(repositoryClass=DeveloperAuthsRepository::class)
+ * @ORM\Entity(repositoryClass=UserAuthsRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  * @ORM\HasLifecycleCallbacks()
  */
-class DeveloperAuths implements UserInterface
+class UserAuths implements UserInterface
 {
     /**
      * @ORM\Id
@@ -41,9 +41,9 @@ class DeveloperAuths implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $developerId;
+    private $userId;
 
 
 
@@ -124,14 +124,14 @@ class DeveloperAuths implements UserInterface
         return $this;
     }
 
-    public function getDeveloperId(): ?int
+    public function getUserId(): ?int
     {
-        return $this->developerId;
+        return $this->userId;
     }
 
-    public function setDeveloperId(int $developerId): self
+    public function setUserId(int $userId): self
     {
-        $this->developerId = $developerId;
+        $this->userId = $userId;
 
         return $this;
     }

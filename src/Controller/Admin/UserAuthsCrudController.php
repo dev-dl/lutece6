@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class DeveloperAuthsCrudController extends AbstractCrudController
+class UserAuthsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return DeveloperAuths::class;
+        return UserAuths::class;
     }
 
     /*

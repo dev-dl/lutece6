@@ -30,7 +30,7 @@ local database: postgreSql
 ### database
 - [x] developer and developer_auths
   - [x] developer : user informations : lastName, firstName, profilImageName, description
-  - [x] developer_auths : developerId, password, login with googlemail, facebook etc
+  - [x] User_auths : userId, password, login with googlemail, facebook etc
 - [ ] project
 - [ ] activity
 

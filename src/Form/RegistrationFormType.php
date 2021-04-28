@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\DeveloperAuths;
+use App\Entity\UserAuths;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -53,7 +53,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => DeveloperAuths::class,
+            'data_class' => UserAuths::class,
         ]);
     }
 }

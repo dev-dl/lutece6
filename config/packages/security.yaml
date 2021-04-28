@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Entity\DeveloperAuths:
+        App\Entity\UserAuths:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -8,7 +8,7 @@ security:
         users_in_memory: { memory: null }
         our_db_provider:
             entity:
-                class: App\Entity\DeveloperAuths
+                class: App\Entity\UserAuths
                 property: username
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
