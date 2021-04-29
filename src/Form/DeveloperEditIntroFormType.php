@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 
-class CreateDeveloperFormType extends AbstractType
+class DeveloperEditIntroFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

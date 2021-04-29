@@ -7,7 +7,7 @@ use App\Repository\SkillSetRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
-use App\Form\CreateDeveloperFormType;
+use App\Form\DeveloperEditIntroFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,32 +43,43 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}", name="developer")
      */
-    public function show(Developer $developer, SkillSetRepository $skillSetRepository, ActivityRepository $activityRepository)
+    public function show(Developer $developer, SkillSetRepository $skillSetRepository, ActivityRepository $activityRepository, DeveloperRepository $developerRepository)
     {   
         $activities = $activityRepository->findBy(['developer'=> $developer]);
+        $user = $this->getUser();
+        if ($user){
+            $developerId = $user->getUserId();
+            $DeveloperAccount =  $developerRepository->find($developerId);
+            $editIntroURL = $DeveloperAccount->getSlug().'/edit/intro';
+            $edit = 'Edit';
+        };
+          
+
         return new Response($this->twig->render('developer/show.html.twig',[
             'developer' => $developer,
             'skillsets' => $skillSetRepository->findBy(['developer' => $developer]),
-            'activities' => $activities
+            'activities' => $activities,
+            'editIntroURL' => $editIntroURL,
+            'edit' => $edit
         ]));
     }
 
     /**
-     *  @Route("/create_developer", name="create_eveloper")
+     *  @Route("/developer/{slug}/edit/intro", name="developer_edit_intro")
      */
-    public function create_developer(Request $request)
+    public function developerEditIntro(Request $request, DeveloperRepository $developerRepository)
     {   
-        $newDeveloperAccount = new Developer();
-        $form = $this->createForm(CreateDeveloperFormType::class, $newDeveloperAccount);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
+        $user = $this->getUser();
+        $developerId = $user->getUserId();
+        $editDeveloperAccount =  $developerRepository->find($developerId);
+        $form = $this->createForm(DeveloperEditIntroFormType::class, $editDeveloperAccount);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newDeveloperAccount=$form->getData();
-            $this->entityManager->persist($newDeveloperAccount);
+            $this->entityManager->persist($editDeveloperAccount);
             $this->entityManager->flush();
-          
-
-            return $this->redirectToRoute('developer',['slug' =>$newDeveloperAccount->getSlug()]);
+            return $this->redirectToRoute('developer',['slug' =>$editDeveloperAccount->getSlug()]);
         }
 
         return $this->render('developer/createDeveloperAccount.html.twig', [

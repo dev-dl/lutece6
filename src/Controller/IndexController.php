@@ -32,7 +32,7 @@ class IndexController extends AbstractController
         return $this->render('index/index_authenticated.html.twig', [
             'controller_name' => 'IndexController',
             'email' => $user->getUsername(),
-            'developer' => $developerRepository->findBy(['id'=> $developerId])]);       
+            'developer' => $developerRepository->find($developerId)]);      
            
     }
 
