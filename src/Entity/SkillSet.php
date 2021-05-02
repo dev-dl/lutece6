@@ -27,11 +27,6 @@ class SkillSet
      */
     private $percentage;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Developer::class, inversedBy="skillSet")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $developer;
 
     
 
@@ -70,17 +65,6 @@ class SkillSet
         return $this;
     }
 
-    public function getDeveloper(): ?Developer
-    {
-        return $this->developer;
-    }
-
-    public function setDeveloper(?Developer $developer): self
-    {
-        $this->developer = $developer;
-
-        return $this;
-    }
 
 
 

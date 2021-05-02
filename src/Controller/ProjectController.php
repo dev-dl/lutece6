@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Repository\ProjectRepository;
 use App\Form\ProjectCreateFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +24,30 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/project", name="project")
+     * @Route("/project", name="project_index")
      */
-    public function index(): Response
+    public function index(ProjectRepository $projectRepository): Response
     {
+
         return $this->render('project/index.html.twig', [
+            'projects' => $projectRepository->findAll(),
             'controller_name' => 'ProjectController',
         ]);
     }
 
     /**
-     * @Route("/project/create_new_project", name="create_new_project")
+     *  @Route("/project/{slug}", name="project")
+     */
+    public function show(Project $project, ProjectRepository $projectRepository)
+    {   
+          
+        return new Response($this->twig->render('project/show.html.twig',[
+            'project' => $project
+        ]));
+    }
+
+    /**
+     * @Route("/create_new_project", name="create_new_project")
      */
     public function create_new_project(Request $request): Response
     {
@@ -44,7 +58,7 @@ class ProjectController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
-            return $this->redirectToRoute('project');
+            return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);
         }
 
         return $this->render('project/createNewProject.html.twig', [

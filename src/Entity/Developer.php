@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\DeveloperRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -46,11 +44,6 @@ class Developer
      */
     private $description;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $socialNetwork;
-
 
 
     /**
@@ -63,15 +56,6 @@ class Developer
      */
     private $slug;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="developer", orphanRemoval=true)
-     */
-    private $activity;
-   
-    /**
-     * @ORM\OneToMany(targetEntity=SkillSet::class, mappedBy="developer", orphanRemoval=true)
-     */
-    private $skillSet;
 
 
     /**
@@ -81,14 +65,6 @@ class Developer
 
 
 
-
-
-    
-    public function __construct()
-    {
-        $this->activity = new ArrayCollection();
-        $this->skillSet = new ArrayCollection();
-    }
 
     public function __toString(): string 
     {   
@@ -153,17 +129,6 @@ class Developer
         return $this;
     }
 
-    public function getSocialNetwork(): ?string
-    {
-        return $this->socialNetwork;
-    }
-
-    public function setSocialNetwork(?string $socialNetwork): self
-    {
-        $this->socialNetwork = $socialNetwork;
-
-        return $this;
-    }
 
 
     public function getPhotoFileName(): ?string
@@ -195,66 +160,6 @@ class Developer
         if(!$this->slug || '-'===$this->slug){
             $this->slug =(string) $slugger->slug((string) $this)->lower().$this->createdAt->format('Ymd');
         }
-    }
-
-    /**
-     * @return Collection|Activity[]
-     */
-    public function getActivity(): Collection
-    {
-        return $this->activity;
-    }
-
-    public function addActivity(Activity $activity): self
-    {
-        if (!$this->activity->contains($activity)) {
-            $this->activity[] = $activity;
-            $activity->setDeveloper($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActivity(Activity $activity): self
-    {
-        if ($this->activity->removeElement($activity)) {
-            // set the owning side to null (unless already changed)
-            if ($activity->getDeveloper() === $this) {
-                $activity->setDeveloper(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SkillSet[]
-     */
-    public function getSkillSet(): Collection
-    {
-        return $this->skillSet;
-    }
-
-    public function addSkillSet(SkillSet $skillSet): self
-    {
-        if (!$this->skillSet->contains($skillSet)) {
-            $this->skillSet[] = $skillSet;
-            $skillSet->setDeveloper($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkillSet(SkillSet $skillSet): self
-    {
-        if ($this->skillSet->removeElement($skillSet)) {
-            // set the owning side to null (unless already changed)
-            if ($skillSet->getDeveloper() === $this) {
-                $skillSet->setDeveloper(null);
-            }
-        }
-
-        return $this;
     }
 
 
