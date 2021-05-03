@@ -27,6 +27,11 @@ class ProjectDuplication
      */
     private $duplicatedTo;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class ProjectDuplication
     public function setDuplicatedTo(int $duplicatedTo): self
     {
         $this->duplicatedTo = $duplicatedTo;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

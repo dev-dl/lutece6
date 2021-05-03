@@ -66,5 +66,37 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    /**
+     *  @Route("/project/{slug}/add/position", name="project_add_position")
+     */
+    public function project_add_position(Project $project, ProjectRepository $projectRepository)
+    {   
+          
+        return new Response($this->twig->render('project/show.html.twig',[
+            'project' => $project
+        ]));
+    }
+
+    /**
+     *  @Route("/project/{slug}/add/activity", name="project_add_activity")
+     */
+    public function project_add_activity(Project $project, ProjectRepository $projectRepository)
+    {   
+          
+        return new Response($this->twig->render('project/show.html.twig',[
+            'project' => $project
+        ]));
+    }
+
+    /**
+     *  @Route("/project/{slug}/edit/position", name="project_edit_position")
+     */
+    public function project_edit_position(Project $project, ProjectRepository $projectRepository)
+    {   
+          
+        return new Response($this->twig->render('project/show.html.twig',[
+            'project' => $project
+        ]));
+    }
 
 }
