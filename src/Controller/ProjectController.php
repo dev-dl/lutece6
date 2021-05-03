@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\Position;
+use APp\Entity\Developer;
 use App\Repository\ProjectRepository;
 use App\Form\ProjectCreateFormType;
+use App\Form\PositionCrudFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,9 +43,11 @@ class ProjectController extends AbstractController
      */
     public function show(Project $project, ProjectRepository $projectRepository)
     {   
-          
+        $addPositionURL = $project->getSlug().'/add/position';
+
         return new Response($this->twig->render('project/show.html.twig',[
-            'project' => $project
+            'project' => $project,
+            'addPositionURL' => $addPositionURL
         ]));
     }
 
@@ -69,13 +74,25 @@ class ProjectController extends AbstractController
     /**
      *  @Route("/project/{slug}/add/position", name="project_add_position")
      */
-    public function project_add_position(Project $project, ProjectRepository $projectRepository)
+    public function project_add_position(Request $request,Project $project)
     {   
-        $user = $this->getUser();
-          
-        return new Response($this->twig->render('project/show.html.twig',[
-            'project' => $project
-        ]));
+        $user = $this->getUser();      
+        $newPosition = new Position();
+        $form = $this->createForm(PositionCrudFormType::class, $newPosition);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newPosition->setAction("Created");
+            $newPosition->setUserId($user->getId());
+            $newPosition->setProjectId($project->getId());
+            $entityManager = $this->getDoctrine()->getManager();
+            $this->entityManager->persist($newPosition);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('project',['slug' =>$project->getSlug()]);
+        }
+
+        return $this->render('project/projectAddPosition.html.twig', [
+            'create_form' => $form->createView(),
+        ]);
     }
 
     /**

@@ -49,8 +49,8 @@ class DeveloperController extends AbstractController
         $user = $this->getUser();
         if ($user){
             $developerId = $user->getUserId();
-            $DeveloperAccount =  $developerRepository->find($developerId);
-            $editIntroURL = $DeveloperAccount->getSlug().'/edit/intro';
+            $developerAccount =  $developerRepository->find($developerId);
+            $editIntroURL = $developerAccount->getSlug().'/edit/intro';
             $edit = 'Edit';
         };
           
@@ -82,7 +82,7 @@ class DeveloperController extends AbstractController
             return $this->redirectToRoute('developer',['slug' =>$editDeveloperAccount->getSlug()]);
         }
 
-        return $this->render('developer/createDeveloperAccount.html.twig', [
+        return $this->render('developer/developerEditIntro.html.twig', [
             'create_form' => $form->createView(),
         ]);
 
