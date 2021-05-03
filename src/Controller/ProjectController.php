@@ -71,6 +71,7 @@ class ProjectController extends AbstractController
      */
     public function project_add_position(Project $project, ProjectRepository $projectRepository)
     {   
+        $user = $this->getUser();
           
         return new Response($this->twig->render('project/show.html.twig',[
             'project' => $project

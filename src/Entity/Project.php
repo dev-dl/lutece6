@@ -44,11 +44,6 @@ class Project
     private $is_private;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $tags;
-
-    /**
      * @ORM\Column(type="string", length=255, unique=true , nullable=true)
      */
     private $slug;
@@ -58,19 +53,8 @@ class Project
      */
     private $createdAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="project", orphanRemoval=true)
-     */
-    private $activity;
 
 
-
-
-
-    public function __construct()
-    {
-        $this->activity = new ArrayCollection();
-    }
 
     public function __toString(): string 
     {
@@ -130,47 +114,7 @@ class Project
         return $this;
     }
 
-    public function getTags(): ?string
-    {
-        return $this->tags;
-    }
 
-    public function setTags(?string $tags): self
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Activity[]
-     */
-    public function getActivity(): Collection
-    {
-        return $this->activity;
-    }
-
-    public function addActivity(Activity $activity): self
-    {
-        if (!$this->activity->contains($activity)) {
-            $this->activity[] = $activity;
-            $activity->setProject($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActivity(Activity $activity): self
-    {
-        if ($this->activity->removeElement($activity)) {
-            // set the owning side to null (unless already changed)
-            if ($activity->getProject() === $this) {
-                $activity->setProject(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getSlug(): ?string
     {

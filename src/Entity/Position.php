@@ -17,11 +17,6 @@ class Position
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=project::class, inversedBy="positionId", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $project;
 
     /**
      * @ORM\Column(type="integer")
@@ -58,17 +53,6 @@ class Position
         return $this->id;
     }
 
-    public function getProject(): ?project
-    {
-        return $this->project;
-    }
-
-    public function setProject(project $project): self
-    {
-        $this->project = $project;
-
-        return $this;
-    }
 
     public function getProjectId(): ?int
     {
