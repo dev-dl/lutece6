@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Entity\Position;
 use APp\Entity\Developer;
 use App\Repository\ProjectRepository;
+use App\Repository\PositionRepository;
 use App\Form\ProjectCreateFormType;
 use App\Form\PositionCrudFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,13 +42,14 @@ class ProjectController extends AbstractController
     /**
      *  @Route("/project/{slug}", name="project")
      */
-    public function show(Project $project, ProjectRepository $projectRepository)
+    public function show(Project $project, ProjectRepository $projectRepository, PositionRepository $positionRepository)
     {   
         $addPositionURL = $project->getSlug().'/add/position';
 
         return new Response($this->twig->render('project/show.html.twig',[
             'project' => $project,
-            'addPositionURL' => $addPositionURL
+            'addPositionURL' => $addPositionURL,
+            'positions'=> $positionRepository->findby(['projectId' => $project->getId()])
         ]));
     }
 
@@ -56,10 +58,12 @@ class ProjectController extends AbstractController
      */
     public function create_new_project(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $newProject = new Project();
         $form = $this->createForm(ProjectCreateFormType::class, $newProject);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $newProject->setRole("ROLE_SUPER_ADMIN");
             $entityManager = $this->getDoctrine()->getManager();
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
@@ -76,6 +80,7 @@ class ProjectController extends AbstractController
      */
     public function project_add_position(Request $request,Project $project)
     {   
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();      
         $newPosition = new Position();
         $form = $this->createForm(PositionCrudFormType::class, $newPosition);
