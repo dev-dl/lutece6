@@ -169,7 +169,7 @@ CREATE TABLE public.project (
     project_name character varying(255) NOT NULL,
     description text NOT NULL,
     cover_image_file_name character varying(255) DEFAULT NULL::character varying,
-    is_private boolean NOT NULL,
+    isPrivate boolean NOT NULL,
     tags character varying(255) DEFAULT NULL::character varying
 );
 

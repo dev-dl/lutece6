@@ -41,7 +41,7 @@ class Project
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_private;
+    private $isPrivate;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true , nullable=true)
@@ -104,12 +104,12 @@ class Project
 
     public function getIsPrivate(): ?bool
     {
-        return $this->is_private;
+        return $this->isPrivate;
     }
 
     public function setIsPrivate(bool $is_private): self
     {
-        $this->is_private = $is_private;
+        $this->isPrivate = $isPrivate;
 
         return $this;
     }
