@@ -3,8 +3,10 @@
 {% block body %}
     
     
-
-
+	<h1>Project</h1>
+	{{ project.projectName}}
+	{{ project.description}}
+	<a href =" {{ editProjectURL }} ">{{ editProjectText }}</a>
 
 	<a  href=" {{ addPositionURL }} "> {{ addPositionText }}</a>
 

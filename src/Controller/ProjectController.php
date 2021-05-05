@@ -47,14 +47,19 @@ class ProjectController extends AbstractController
         $user = $this->getUser();
         if($user->getUserId()==$project->getOwner()){
             $addPositionURL = $project->getSlug().'/add/position';
-            $add = 'Add Position';
+            $addPositionText = 'Add Position';
+
+            $editProjectURL = $project->getSlug().'/edit';
+            $editProjectText = 'Edit Project';
         }
 
         return new Response($this->twig->render('project/show.html.twig',[
             'project' => $project,
             'addPositionURL' => $addPositionURL,
-            'addPositionText' => $add, 
-            'positions'=> $positionRepository->findby(['project' => $project])
+            'addPositionText' => $addPositionText, 
+            'positions'=> $positionRepository->findby(['project' => $project]),
+            'editProjectURL' => $editProjectURL,
+            'editProjectText' => $editProjectText
         ]));
     }
 
@@ -73,6 +78,26 @@ class ProjectController extends AbstractController
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
             return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);
+        }
+
+        return $this->render('project/createNewProject.html.twig', [
+            'create_form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/project/{slug}/edit", name="edit_project")
+     */
+    public function edit_project(Request $request, project $project): Response
+    {
+        $this->denyAccessUnlessGranted('owner',$project);
+        $form = $this->createForm(ProjectCreateFormType::class, $project);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $this->entityManager->persist($project);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('project',['slug' =>$project->getSlug()]);
         }
 
         return $this->render('project/createNewProject.html.twig', [
@@ -110,7 +135,7 @@ class ProjectController extends AbstractController
     public function project_edit_position(Project $project, Position $position)
     {   
         /* must go to positionController to edit this
-        
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         $form = $this->createForm(DeveloperEditIntroFormType::class, $position);
         $form->handleRequest($request);
