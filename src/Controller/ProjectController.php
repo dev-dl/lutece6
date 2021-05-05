@@ -44,11 +44,16 @@ class ProjectController extends AbstractController
      */
     public function show(Project $project, ProjectRepository $projectRepository, PositionRepository $positionRepository)
     {   
-        $addPositionURL = $project->getSlug().'/add/position';
+        $user = $this->getUser();
+        if($user->getUserId()==$project->getOwner()){
+            $addPositionURL = $project->getSlug().'/add/position';
+            $add = 'Add Position';
+        }
 
         return new Response($this->twig->render('project/show.html.twig',[
             'project' => $project,
             'addPositionURL' => $addPositionURL,
+            'addPositionText' => $add, 
             'positions'=> $positionRepository->findby(['project' => $project])
         ]));
     }
@@ -64,7 +69,7 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $newProject->setOwner($this->getUser());
+            $newProject->setOwner($this->getUser()->getUserId());
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
             return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);
@@ -100,6 +105,30 @@ class ProjectController extends AbstractController
     }
 
     /**
+     *  @Route("/project/{slug}/edit/position", name="project_edit_position")
+     */
+    public function project_edit_position(Project $project, Position $position)
+    {   
+        /* must go to positionController to edit this
+        
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
+        $form = $this->createForm(DeveloperEditIntroFormType::class, $position);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($position);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('project',['slug' =>$project->getSlug()]);
+        }
+
+        return $this->render('project/projectAddPosition.html.twig', [
+            'create_form' => $form->createView(),
+        ]);
+        */
+    }
+
+
+    /**
      *  @Route("/project/{slug}/add/activity", name="project_add_activity")
      */
     public function project_add_activity(Project $project, ProjectRepository $projectRepository)
@@ -110,15 +139,6 @@ class ProjectController extends AbstractController
         ]));
     }
 
-    /**
-     *  @Route("/project/{slug}/edit/position", name="project_edit_position")
-     */
-    public function project_edit_position(Project $project, ProjectRepository $projectRepository)
-    {   
-          
-        return new Response($this->twig->render('project/show.html.twig',[
-            'project' => $project
-        ]));
-    }
+
 
 }

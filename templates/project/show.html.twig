@@ -4,12 +4,9 @@
     
     
 
-	<a href=" {{ editIntroURL }} "> Add activity </a>
-
-	{{project.id}}
 
 
-	<a  href=" {{ addPositionURL }} ">Add position</a>
+	<a  href=" {{ addPositionURL }} "> {{ addPositionText }}</a>
 
 	{% for position in positions %}
         <h4> {{ position.title }} </h4>
