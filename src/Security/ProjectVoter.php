@@ -1,26 +1,25 @@
 <?php
 namespace App\Security;
 
-use App\Entity\Developer;
+use App\Entity\Project;
 use App\Entity\UserAuths;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class DeveloperVoter extends Voter
+class ProjectVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const VIEW = 'view';
-    const EDIT = 'edit';
+    const OWNER = 'owner';
 
     protected function supports(string $attribute, $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::VIEW, self::EDIT])) {
+        if (!in_array($attribute, [self::OWNER])) {
             return false;
         }
 
-        // only vote on `Developer` objects
-        if (!$subject instanceof Developer) {
+        // only vote on `Project` objects
+        if (!$subject instanceof Project) {
             return false;
         }
 
@@ -37,30 +36,21 @@ class DeveloperVoter extends Voter
         }
 
         // you know $subject is a Post object, thanks to `supports()`
-        /** @var Developer $developer */
-        $developer = $subject;
+        /** @var Project $project */
+        $project = $subject;
 
         switch ($attribute) {
-            case self::VIEW:
-                return $this->canView($developer, $user);
-            case self::EDIT:
-                return $this->canEdit($developer, $user);
+            case self::OWNER:
+                return $this->owner($project, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canView(Developer $developer, UserAuths $user): bool
-    {
-        // if they can edit, they can view
-        if ($this->canEdit($developer, $user)) {
-            return true;
-        }
 
-    }
-
-    private function canEdit(Developer $developer, UserAuths $user): bool
+    private function owner( Project $project, UserAuths $user): bool
     {
-        return $user->getUserId() === $developer->getId();
+
+        return $user->getUserId()===$project->getOwner();
     }
 }

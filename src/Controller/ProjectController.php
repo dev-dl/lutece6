@@ -63,8 +63,8 @@ class ProjectController extends AbstractController
         $form = $this->createForm(ProjectCreateFormType::class, $newProject);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $newProject->setRole("ROLE_SUPER_ADMIN");
             $entityManager = $this->getDoctrine()->getManager();
+            $newProject->setOwner($this->getUser()->getUserId());
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
             return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);
@@ -80,14 +80,13 @@ class ProjectController extends AbstractController
      */
     public function project_add_position(Request $request,Project $project)
     {   
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $user = $this->getUser();      
+
+        $this->denyAccessUnlessGranted('owner',$project);
+              
         $newPosition = new Position();
         $form = $this->createForm(PositionCrudFormType::class, $newPosition);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $newPosition->setAction("Created");
-            $newPosition->setUserId($user->getId());
             $newPosition->setProjectId($project->getId());
             $entityManager = $this->getDoctrine()->getManager();
             $this->entityManager->persist($newPosition);

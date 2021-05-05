@@ -53,6 +53,11 @@ class Project
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $owner;
+
 
 
 
@@ -107,7 +112,7 @@ class Project
         return $this->isPrivate;
     }
 
-    public function setIsPrivate(bool $is_private): self
+    public function setIsPrivate(bool $isPrivate): self
     {
         $this->isPrivate = $isPrivate;
 
@@ -153,6 +158,18 @@ class Project
     public function setCreatedAtValue(): void
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getOwner(): ?int
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(int $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 
 

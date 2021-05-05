@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Developer;
-use App\Repository\SkillSetRepository;
-use App\Repository\ActivityRepository;
 use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
 use App\Form\DeveloperEditIntroFormType;
@@ -43,22 +41,17 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}", name="developer")
      */
-    public function show(Developer $developer, SkillSetRepository $skillSetRepository, ActivityRepository $activityRepository, DeveloperRepository $developerRepository)
+    public function show(Developer $developer, DeveloperRepository $developerRepository)
     {   
-        $activities = $activityRepository->findBy(['developer'=> $developer]);
         $user = $this->getUser();
-        if ($user){
-            $developerId = $user->getUserId();
-            $developerAccount =  $developerRepository->find($developerId);
-            $editIntroURL = $developerAccount->getSlug().'/edit/intro';
+        if($user->getUserId()==$developer->getId()){
+            $editIntroURL = $developer->getSlug().'/edit/intro';
             $edit = 'Edit';
-        };
-          
+        }
+        
 
         return new Response($this->twig->render('developer/show.html.twig',[
             'developer' => $developer,
-            'skillsets' => $skillSetRepository->findBy(['developer' => $developer]),
-            'activities' => $activities,
             'editIntroURL' => $editIntroURL,
             'edit' => $edit
         ]));
@@ -67,7 +60,7 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}/edit/intro", name="developer_edit_intro")
      */
-    public function developerEditIntro(Request $request, DeveloperRepository $developerRepository)
+    public function developerEditIntro(Request $request,Developer $developer, DeveloperRepository $developerRepository)
     {   
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         $user = $this->getUser();

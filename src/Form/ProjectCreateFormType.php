@@ -17,7 +17,6 @@ class ProjectCreateFormType extends AbstractType
             ->add('description')
             ->add('coverImageFileName')
             ->add('isPrivate')
-            ->add('tags')
             ->add('submit', SubmitType::class)
         ;
     }

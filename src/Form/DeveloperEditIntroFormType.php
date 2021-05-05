@@ -20,7 +20,6 @@ class DeveloperEditIntroFormType extends AbstractType
             ->add('lastName')
             ->add('firstName')
             ->add('description')
-            ->add('socialNetwork')
             ->add('photoFileName',FileType::class, [
                 'required' => false,
                 'mapped' => false,

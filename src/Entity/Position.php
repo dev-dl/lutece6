@@ -25,7 +25,7 @@ class Position
     private $projectId;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $userId;
 
@@ -35,7 +35,7 @@ class Position
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $action;
 
@@ -49,10 +49,6 @@ class Position
      */
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $role;
 
     public function getId(): ?int
     {
@@ -133,19 +129,4 @@ class Position
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function getRole(): ?string
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 }
