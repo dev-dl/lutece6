@@ -49,7 +49,7 @@ class ProjectController extends AbstractController
         return new Response($this->twig->render('project/show.html.twig',[
             'project' => $project,
             'addPositionURL' => $addPositionURL,
-            'positions'=> $positionRepository->findby(['projectId' => $project->getId()])
+            'positions'=> $positionRepository->findby(['project' => $project])
         ]));
     }
 
@@ -64,7 +64,7 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $newProject->setOwner($this->getUser()->getUserId());
+            $newProject->setOwner($this->getUser());
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
             return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);
@@ -87,7 +87,7 @@ class ProjectController extends AbstractController
         $form = $this->createForm(PositionCrudFormType::class, $newPosition);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $newPosition->setProjectId($project->getId());
+            $newPosition->setProject($project);
             $entityManager = $this->getDoctrine()->getManager();
             $this->entityManager->persist($newPosition);
             $this->entityManager->flush();

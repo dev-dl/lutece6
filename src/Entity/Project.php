@@ -58,6 +58,16 @@ class Project
      */
     private $owner;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Position::class, mappedBy="project", orphanRemoval=true)
+     */
+    private $positions;
+
+    public function __construct()
+    {
+        $this->positions = new ArrayCollection();
+    }
+
 
 
 
@@ -168,6 +178,36 @@ class Project
     public function setOwner(int $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Position[]
+     */
+    public function getPositions(): Collection
+    {
+        return $this->positions;
+    }
+
+    public function addPosition(Position $position): self
+    {
+        if (!$this->positions->contains($position)) {
+            $this->positions[] = $position;
+            $position->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removePosition(Position $position): self
+    {
+        if ($this->positions->removeElement($position)) {
+            // set the owning side to null (unless already changed)
+            if ($position->getProject() === $this) {
+                $position->setProject(null);
+            }
+        }
 
         return $this;
     }

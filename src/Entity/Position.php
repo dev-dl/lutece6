@@ -19,10 +19,6 @@ class Position
     private $id;
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $projectId;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -49,6 +45,12 @@ class Position
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="positions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $project;
+
 
     public function getId(): ?int
     {
@@ -56,17 +58,6 @@ class Position
     }
 
 
-    public function getProjectId(): ?int
-    {
-        return $this->projectId;
-    }
-
-    public function setProjectId(int $projectId): self
-    {
-        $this->projectId = $projectId;
-
-        return $this;
-    }
 
     public function getUserId(): ?int
     {
@@ -127,6 +118,18 @@ class Position
     public function setCreatedAtValue(): void
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
+
+        return $this;
     }
 
 }
