@@ -42,10 +42,10 @@ class ProjectController extends AbstractController
     /**
      *  @Route("/project/{slug}", name="project")
      */
-    public function show(Project $project, ProjectRepository $projectRepository, PositionRepository $positionRepository)
+    public function show(Project $project)
     {   
         $user = $this->getUser();
-        if($user->getUserId()==$project->getOwner()){
+        if(($user) AND ($user->getUserId()==$project->getOwner())){
             $addPositionURL = $project->getSlug().'/add/position';
             $addPositionText = 'Add Position';
 
@@ -57,7 +57,7 @@ class ProjectController extends AbstractController
             'project' => $project,
             'addPositionURL' => $addPositionURL,
             'addPositionText' => $addPositionText, 
-            'positions'=> $positionRepository->findby(['project' => $project]),
+            'positions'=> $project->getPositions(),
             'editProjectURL' => $editProjectURL,
             'editProjectText' => $editProjectText
         ]));

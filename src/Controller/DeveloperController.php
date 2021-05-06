@@ -44,7 +44,7 @@ class DeveloperController extends AbstractController
     public function show(Developer $developer, DeveloperRepository $developerRepository)
     {   
         $user = $this->getUser();
-        if($user->getUserId()==$developer->getId()){
+        if(($user) AND ($user->getUserId()==$developer->getId())){
             $editIntroURL = $developer->getSlug().'/edit/intro';
             $edit = 'Edit';
         }
