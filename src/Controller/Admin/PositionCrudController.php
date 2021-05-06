@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Position;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class PositionCrudController extends AbstractCrudController
@@ -12,14 +13,6 @@ class PositionCrudController extends AbstractCrudController
         return Position::class;
     }
 
-    /*
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
-    }
-    */
+    
+    
 }

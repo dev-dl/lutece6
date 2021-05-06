@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PositionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PositionRepository::class)
@@ -26,12 +27,12 @@ class Position
     private $userId;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $action;
 
@@ -51,6 +52,15 @@ class Position
      */
     private $project;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
+    public function __toString(): string 
+    {   
+        return $this->project.'-'.$this->title;
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +140,25 @@ class Position
         $this->project = $project;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if(!$this->slug || '-'===$this->slug){
+            $this->slug = $slugger->slug($this->project.'_'.$this->title)->lower().$this->createdAt->format('Ymd');
+        }
     }
 
 }

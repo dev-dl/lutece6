@@ -2,12 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Position;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class PositionController extends AbstractController
 {
+
+    private $twig;
+    private $entityManager;
+
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
+    {
+        $this->twig = $twig;
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @Route("/position", name="position_index")
      */
@@ -22,24 +36,10 @@ class PositionController extends AbstractController
     /**
      *  @Route("/position/{slug}", name="position")
      */
-    public function show(Project $project)
+    public function show(Position $position)
     {   
-        $user = $this->getUser();
-        if(($user) AND ($user->getUserId()==$project->getOwner())){
-            $addPositionURL = $project->getSlug().'/add/position';
-            $addPositionText = 'Add Position';
-
-            $editProjectURL = $project->getSlug().'/edit';
-            $editProjectText = 'Edit Project';
-        }
-
-        return new Response($this->twig->render('project/show.html.twig',[
-            'project' => $project,
-            'addPositionURL' => $addPositionURL,
-            'addPositionText' => $addPositionText, 
-            'positions'=> $project->getPositions(),
-            'editProjectURL' => $editProjectURL,
-            'editProjectText' => $editProjectText
+        return new Response($this->twig->render('position/show.html.twig',[
+            'position' => $position,
         ]));
     }
 
