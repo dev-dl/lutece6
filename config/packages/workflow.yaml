@@ -3,13 +3,15 @@ framework:
         candidate:
             type: 'state_machine'
             audit_trail:
-                enable: "%kernel.debug%"
+                enabled: "%kernel.debug%"
+            marking_store:    
                 type: 'method'
                 property: 'state'
             supports:
                 - App\Entity\Position
             initial_marking: submitted
             places:
+                - submitted
                 - accepted
                 - rejected
             transitions:

@@ -60,6 +60,11 @@ class Position
      */
     private $candidates;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $state;
+
     public function __construct()
     {
         $this->candidates = new ArrayCollection();
@@ -184,6 +189,18 @@ class Position
                 $candidate->setPosition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(?string $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
