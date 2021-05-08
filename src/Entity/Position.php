@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PositionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -52,6 +54,16 @@ class Position
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity=candidate::class, mappedBy="position")
+     */
+    private $candidates;
+
+    public function __construct()
+    {
+        $this->candidates = new ArrayCollection();
+    }
 
     public function __toString(): string 
     {   
@@ -144,6 +156,36 @@ class Position
         if(!$this->slug || '-'===$this->slug){
             $this->slug = $slugger->slug($this->project.'_'.$this->title)->lower().$this->createdAt->format('Ymd');
         }
+    }
+
+    /**
+     * @return Collection|candidate[]
+     */
+    public function getCandidates(): Collection
+    {
+        return $this->candidates;
+    }
+
+    public function addCandidate(candidate $candidate): self
+    {
+        if (!$this->candidates->contains($candidate)) {
+            $this->candidates[] = $candidate;
+            $candidate->setPosition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidate(candidate $candidate): self
+    {
+        if ($this->candidates->removeElement($candidate)) {
+            // set the owning side to null (unless already changed)
+            if ($candidate->getPosition() === $this) {
+                $candidate->setPosition(null);
+            }
+        }
+
+        return $this;
     }
 
 }

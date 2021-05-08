@@ -1,2 +1,22 @@
 framework:
-    workflows: null
+    workflows: 
+        candidate:
+            type: 'state_machine'
+            audit_trail:
+                enable: "%kernel.debug%"
+                type: 'method'
+                property: 'state'
+            supports:
+                - App\Entity\Position
+            initial_marking: submitted
+            places:
+                - accepted
+                - rejected
+            transitions:
+                accept:
+                    from: submitted
+                    to: accepted
+                reject:
+                    from: submitted
+                    to: rejected            
+

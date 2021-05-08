@@ -15,6 +15,8 @@ class Candidate
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+
+
     private $id;
 
     /**
@@ -22,6 +24,15 @@ class Candidate
      */
     private $state;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Position::class, inversedBy="candidates")
+     */
+    private $position;
+
+
+    private $currentPlace;
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -37,5 +48,27 @@ class Candidate
         $this->state = $state;
 
         return $this;
+    }
+
+    public function getPosition(): ?Position
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?Position $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getCurrentPlace()
+    {
+        return $this->currentPlace;
+    }
+
+    public function setCurrentPlace($currentPlace, $context = [])
+    {
+        $this->currentPlace = $currentPlace;
     }
 }
