@@ -10,6 +10,9 @@ use App\Repository\PositionRepository;
 use App\Form\ProjectCreateFormType;
 use App\Form\PositionCrudFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Workflow\WorkflowInterface;
+use Symfony\Component\Workflow\Registry;
+use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +23,14 @@ class ProjectController extends AbstractController
 {
     private $twig;
     private $entityManager;
+    private $candidateWorkflow;
 
-    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
+
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager,  WorkflowInterface $candidateStateMachine)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
+        $this->candidateStateMachine = $candidateStateMachine;
     }
 
     /**
@@ -133,7 +139,8 @@ class ProjectController extends AbstractController
      *  @Route("/project/{slug}/edit/position", name="project_edit_position")
      */
     public function project_edit_position(Project $project, Position $position)
-    {   
+    {  
+
         /* must go to positionController to edit this
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 

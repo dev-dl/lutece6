@@ -61,9 +61,10 @@ class Position
     private $candidates;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      */
-    private $state;
+    private $state = 'submitted';
+
 
     public function __construct()
     {
@@ -204,5 +205,6 @@ class Position
 
         return $this;
     }
+
 
 }
