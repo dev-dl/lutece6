@@ -7,5 +7,9 @@
 	{{ position.title}}
 	{{ position.description}}
 
+    {% for candidate in candidates %}
+        <h4> {{ candidate }} </h4>
 
+    {% endfor %} 
+	
 {% endblock %}

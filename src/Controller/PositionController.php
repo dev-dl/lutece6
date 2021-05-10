@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Entity\Position;
 use App\Entity\Candidate;
+use App\Repository\DeveloperRepository;
+use App\Repository\CandidateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\Workflow\Exception\LogicException;
@@ -43,11 +46,39 @@ class PositionController extends AbstractController
      */
     public function show(Position $position)
     {   
-
         //$this->candidateStateMachine->apply($position, 'accept');
         $this->entityManager->flush();
         return new Response($this->twig->render('position/show.html.twig',[
             'position' => $position,
+        ]));
+    }
+
+    /**
+     *  @Route("/position/{slug}/apply", name="position_aply")
+     */
+    public function apply(Position $position,DeveloperRepository $developerRepository)
+    {   
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $newCandidate = new Candidate();
+        $Developer =  $developerRepository->find($user = $this->getUser()->getUserId());
+        $newCandidate->setDeveloper($Developer);
+        $newCandidate->setPosition($position);
+        $this->entityManager->persist($newCandidate);
+        $this->entityManager->flush();
+        return new Response($this->twig->render('position/show.html.twig',[
+            'position' => $position,
+        ]));
+    }
+
+
+        /**
+     *  @Route("/position/{slug}/candidates", name="position_candidate")
+     */
+    public function position_candidate(Position $position)
+    {   
+        $this->denyAccessUnlessGranted('owner',$position->getProject());
+        return new Response($this->twig->render('position/show.html.twig',[
+            'candidates' => $position->getCandidates(),
         ]));
     }
 

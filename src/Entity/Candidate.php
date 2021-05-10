@@ -30,6 +30,17 @@ class Candidate
      */
     private $state = 'submitted';
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Developer::class, inversedBy="candidates")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $developer;
+
+
+    public function __toString(): string 
+    {   
+        return $this->developer;
+    }
     
     public function getId(): ?int
     {
@@ -66,6 +77,18 @@ class Candidate
     public function setState(?string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getDeveloper(): ?Developer
+    {
+        return $this->developer;
+    }
+
+    public function setDeveloper(?Developer $developer): self
+    {
+        $this->developer = $developer;
 
         return $this;
     }

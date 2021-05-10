@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DeveloperRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -62,6 +64,16 @@ class Developer
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=candidate::class, mappedBy="developer", orphanRemoval=true)
+     */
+    private $candidates;
+
+    public function __construct()
+    {
+        $this->candidates = new ArrayCollection();
+    }
 
 
 
@@ -182,6 +194,36 @@ class Developer
     public function setCreatedAtValue(): void
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return Collection|candidate[]
+     */
+    public function getCandidates(): Collection
+    {
+        return $this->candidates;
+    }
+
+    public function addCandidate(candidate $candidate): self
+    {
+        if (!$this->candidates->contains($candidate)) {
+            $this->candidates[] = $candidate;
+            $candidate->setDeveloper($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidate(candidate $candidate): self
+    {
+        if ($this->candidates->removeElement($candidate)) {
+            // set the owning side to null (unless already changed)
+            if ($candidate->getDeveloper() === $this) {
+                $candidate->setDeveloper(null);
+            }
+        }
+
+        return $this;
     }
 
 

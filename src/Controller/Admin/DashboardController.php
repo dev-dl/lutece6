@@ -8,6 +8,7 @@ use App\Entity\Activity;
 use App\Entity\SkillSet;
 use App\Entity\UserAuths;
 use App\Entity\Position;
+use App\Entity\Candidate;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -45,6 +46,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('SkillSet', 'fa fa-motorcycle', SkillSet::class);
         yield MenuItem::linkToCrud('UserAuths', 'fa fa-key', UserAuths::class);
         yield MenuItem::linkToCrud('Position', 'fa fa-hourglass-end', Position::class);
+        yield MenuItem::linkToCrud('Candidate', 'fa fa-hourglass-end', Candidate::class);
     }
 
     
