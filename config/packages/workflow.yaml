@@ -8,7 +8,7 @@ framework:
                 type: 'method'
                 property: 'state'
             supports:
-                - App\Entity\Position
+                - App\Entity\Candidate
             initial_marking: submitted
             places:
                 - submitted

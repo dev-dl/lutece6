@@ -60,10 +60,7 @@ class Position
      */
     private $candidates;
 
-    /**
-     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
-     */
-    private $state = 'submitted';
+
 
 
     public function __construct()
@@ -194,17 +191,7 @@ class Position
         return $this;
     }
 
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
 
-    public function setState(?string $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Position;
+use App\Entity\Candidate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\Workflow\Exception\LogicException;
@@ -43,7 +44,7 @@ class PositionController extends AbstractController
     public function show(Position $position)
     {   
 
-        $this->candidateStateMachine->apply($position, 'accept');
+        //$this->candidateStateMachine->apply($position, 'accept');
         $this->entityManager->flush();
         return new Response($this->twig->render('position/show.html.twig',[
             'position' => $position,
