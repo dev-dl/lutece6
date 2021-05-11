@@ -51,6 +51,6 @@ class ProjectVoter extends Voter
     private function owner( Project $project, UserAuths $user): bool
     {
 
-        return $user->getUserId()===$project->getOwner();
+        return $user->getDeveloper()->getId()===$project->getOwner();
     }
 }

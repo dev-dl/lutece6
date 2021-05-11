@@ -47,9 +47,17 @@ class PositionController extends AbstractController
     public function show(Position $position)
     {   
         //$this->candidateStateMachine->apply($position, 'accept');
-        $this->entityManager->flush();
+        
+        $user = $this->getUser();
+        if(($user) AND ($user->getDeveloper()->getId()==$project->getOwner())){
+            $showCandidateURL = $position->getSlug().'/candidates';
+            $showCandidateText = 'Candidates';
+        }
+
         return new Response($this->twig->render('position/show.html.twig',[
             'position' => $position,
+            'showCandidateURL' => $showCandidateURL,
+            'showCandidateText' => $showCandidateText,
         ]));
     }
 
@@ -60,7 +68,7 @@ class PositionController extends AbstractController
     {   
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $newCandidate = new Candidate();
-        $Developer =  $developerRepository->find($user = $this->getUser()->getUserId());
+        $Developer =  $developerRepository->find($user = $this->getUser()->getDeveloper());
         $newCandidate->setDeveloper($Developer);
         $newCandidate->setPosition($position);
         $this->entityManager->persist($newCandidate);

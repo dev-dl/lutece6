@@ -51,7 +51,7 @@ class ProjectController extends AbstractController
     public function show(Project $project)
     {   
         $user = $this->getUser();
-        if(($user) AND ($user->getUserId()==$project->getOwner())){
+        if(($user) AND ($user->getDeveloper()->getId()==$project->getOwner())){
             $addPositionURL = $project->getSlug().'/add/position';
             $addPositionText = 'Add Position';
 
@@ -80,7 +80,7 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $newProject->setOwner($this->getUser()->getUserId());
+            $newProject->setOwner($this->getUser()->getDeveloper()->getId());
             $this->entityManager->persist($newProject);
             $this->entityManager->flush();
             return $this->redirectToRoute('project',['slug' =>$newProject->getSlug()]);

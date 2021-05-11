@@ -24,27 +24,27 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = new UserAuths();
-        $developer = new Developer();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $newUser = new UserAuths();
+        $newDeveloper = new Developer();
+        $form = $this->createForm(RegistrationFormType::class, $newUser);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
+            $newUser->setPassword(
                 $passwordEncoder->encodePassword(
-                    $user,
+                    $newUser,
                     $form->get('plainPassword')->getData()
                 )
             );
 
-            $developer->setEmail($form->get('email')->getData());
+            $newDeveloper->setEmail($form->get('email')->getData());
             $entityManager = $this->getDoctrine()->getManager();
             
-            $entityManager->persist($developer);
+            $entityManager->persist($newDeveloper);
             $entityManager->flush();
-            $user->setUserId($developer->getId());
-            $entityManager->persist($user);
+            $newUser->setDeveloper($newDeveloper);
+            $entityManager->persist($newUser);
             $entityManager->flush();
           
 

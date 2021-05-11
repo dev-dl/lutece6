@@ -45,12 +45,12 @@ class UserAuths implements UserInterface
      */
     private $isVerified = false;
 
+
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity=developer::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $userId;
-
-
+    private $developer;
 
 
 
@@ -129,14 +129,15 @@ class UserAuths implements UserInterface
         return $this;
     }
 
-    public function getUserId(): ?int
+
+    public function getDeveloper(): ?developer
     {
-        return $this->userId;
+        return $this->developer;
     }
 
-    public function setUserId(int $userId): self
+    public function setDeveloper(developer $developer): self
     {
-        $this->userId = $userId;
+        $this->developer = $developer;
 
         return $this;
     }
