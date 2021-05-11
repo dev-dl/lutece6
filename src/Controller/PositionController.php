@@ -7,6 +7,7 @@ use App\Entity\Position;
 use App\Entity\Candidate;
 use App\Repository\DeveloperRepository;
 use App\Repository\CandidateRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\Workflow\Exception\LogicException;
@@ -49,8 +50,9 @@ class PositionController extends AbstractController
         //$this->candidateStateMachine->apply($position, 'accept');
         
         $user = $this->getUser();
+        $project = $position->getProject();
         if(($user) AND ($user->getDeveloper()->getId()==$project->getOwner())){
-            $showCandidateURL = $position->getSlug().'/candidates';
+            $showCandidateURL = $position->getSlug().'/candidate_list';
             $showCandidateText = 'Candidates';
         }
 
@@ -79,13 +81,45 @@ class PositionController extends AbstractController
     }
 
 
-        /**
-     *  @Route("/position/{slug}/candidates", name="position_candidate")
+    /**
+     *  @Route("/position/{slug}/candidate_list", name="position_candidateList")
      */
-    public function position_candidate(Position $position)
+    public function position_candidateList(Position $position)
     {   
         $this->denyAccessUnlessGranted('owner',$position->getProject());
         return new Response($this->twig->render('position/show.html.twig',[
+            'position' => $position,
+            'candidates' => $position->getCandidates(),
+        ]));
+    }
+
+    /**
+     *  @Route("/position/{slug}/candidate/{candidate_slug}", name="position_candidate")
+     *  @ParamConverter("candidate", options={"mapping": {"candidate_slug": "slug"}})
+     */
+    public function position_candidate(Position $position, Candidate $candidate)
+    {   
+        $this->denyAccessUnlessGranted('owner',$position->getProject());
+        return new Response($this->twig->render('position/candidate.html.twig',[
+            'candidate' => $candidate,
+            'position' => $position
+        ]));
+    }
+
+    /**
+     *  @Route("/position/{slug}/candidate/{candidate_slug}/accept", name="accept_candidate")
+     *  @ParamConverter("candidate", options={"mapping": {"candidate_slug": "slug"}})
+     */
+    public function accept_candidate(Position $position, Candidate $candidate)
+    {   
+        $this->denyAccessUnlessGranted('owner',$position->getProject());
+
+        $this->candidateStateMachine->apply($candidate, 'accept');
+        $entityManager = $this->getDoctrine()->getManager();
+        $this->entityManager->persist($candidate);
+        $this->entityManager->flush();
+        return new Response($this->twig->render('position/show.html.twig',[
+            'position' => $position,
             'candidates' => $position->getCandidates(),
         ]));
     }

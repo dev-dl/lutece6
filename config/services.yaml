@@ -42,5 +42,10 @@ services:
     App\EntityListener\PositionEntityListener:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Position'}
-            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Position'}                   
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Position'} 
+       
+    App\EntityListener\CandidateEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Candidate'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Candidate'}                                
     

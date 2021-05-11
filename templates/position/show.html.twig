@@ -11,7 +11,8 @@
     <a href =" {{ showCandidateURL }} ">{{ showCandidateText }} </a>
        
     {% for candidate in candidates %}
-        <h4> {{ candidate }} </h4>
+        <h4> {{ candidate }} {{ candidate.state }} </h4>
+        <a href =" {{ path('position',{ slug: position.slug}) }}/candidate/{{ candidate.slug }} "> View </a>
 
     {% endfor %} 
 	
