@@ -14,11 +14,15 @@ framework:
                 - submitted
                 - accepted
                 - rejected
+                - validated
             transitions:
                 accept:
                     from: submitted
                     to: accepted
                 reject:
                     from: submitted
-                    to: rejected            
+                    to: rejected 
+                validate:
+                    from: accepted
+                    to: validated               
 

@@ -47,8 +47,7 @@ class PositionController extends AbstractController
      */
     public function show(Position $position)
     {   
-        //$this->candidateStateMachine->apply($position, 'accept');
-        
+
         $user = $this->getUser();
         $project = $position->getProject();
         if(($user) AND ($user->getDeveloper()->getId()==$project->getOwner())){
@@ -82,7 +81,7 @@ class PositionController extends AbstractController
 
 
     /**
-     *  @Route("/position/{slug}/candidate_list", name="position_candidateList")
+     *  @Route("/position/{slug}/candidate_list", name="position_candidate_list")
      */
     public function position_candidateList(Position $position)
     {   
@@ -118,10 +117,9 @@ class PositionController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $this->entityManager->persist($candidate);
         $this->entityManager->flush();
-        return new Response($this->twig->render('position/show.html.twig',[
-            'position' => $position,
-            'candidates' => $position->getCandidates(),
-        ]));
+
+        return $this->redirectToRoute('position_candidate_list',['slug' => $position->getSlug()]);
+
     }
 
 

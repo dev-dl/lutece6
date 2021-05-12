@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+
+	{% for candidate in candidates %}
+		<h4> {{ candidate }} {{ candidate.position}}  {{ candidate.state }}</h4>
+
+
+		{% if workflow_can(candidate, 'validate')%}
+			<a href="">Validate</a> 
+		{% endif %}
+    {% endfor %}
+
+
+
+{% endblock %}

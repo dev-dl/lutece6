@@ -27,6 +27,11 @@
 			</div>
 		</div>
 
+		{% for candidate in candidates %}
+			<h4> {{ candidate }} {{ candidate.position}}  {{ candidate.state }}</h4>
+
+    	{% endfor %}
+
 
 
 {% endblock %}

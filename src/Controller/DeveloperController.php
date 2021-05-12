@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Developer;
+use App\Entity\Candidate;
 use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
 use App\Form\DeveloperEditIntroFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Workflow\WorkflowInterface;
+use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +20,13 @@ class DeveloperController extends AbstractController
 {
     private $twig;
     private $entityManager;
+    private $candidateWorkflow;
 
-    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager,WorkflowInterface $candidateStateMachine)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
+        $this->candidateStateMachine = $candidateStateMachine;
     }
 
 
@@ -41,10 +46,10 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}", name="developer")
      */
-    public function show(Developer $developer, DeveloperRepository $developerRepository)
+    public function show(Developer $developer)
     {   
         $user = $this->getUser();
-        if(($user) AND ($user->getUserId()==$developer->getId())){
+        if(($user) AND ($user->getDeveloper()==$developer)){
             $editIntroURL = $developer->getSlug().'/edit/intro';
             $edit = 'Edit';
         }
@@ -52,6 +57,7 @@ class DeveloperController extends AbstractController
 
         return new Response($this->twig->render('developer/show.html.twig',[
             'developer' => $developer,
+            'candidates'=> $developer->getCandidates(),
             'editIntroURL' => $editIntroURL,
             'edit' => $edit
         ]));
@@ -81,6 +87,21 @@ class DeveloperController extends AbstractController
 
     }
 
+    /**
+     *  @Route("/developer/{slug}/candidates", name="developer_candidates")
+     */
+    public function developerCandidates(Developer $developer)
+    {   
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        if($user->getDeveloper() == $developer) {
+            $candidates =  $developer->getCandidates();
+        }
+
+        return new Response($this->twig->render('developer/candidates.html.twig',[
+            'candidates'=> $candidates,
+        ]));
+    }
   
 
 }
