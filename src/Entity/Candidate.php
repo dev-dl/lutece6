@@ -120,9 +120,11 @@ class Candidate
 
     public function computeSlug(SluggerInterface $slugger)
     {
+
         if(!$this->slug || '-'===$this->slug){
-            $this->slug =(string) $slugger->slug((string) $this)->lower().$this->createdAt->format('Ymd');
+            $this->slug = $slugger->slug($this->position.'_'.$this->developer)->lower().$this->createdAt->format('Ymd');
         }
+
     }
 
     public function getCreatedAt(): ?\DateTimeInterface

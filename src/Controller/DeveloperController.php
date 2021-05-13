@@ -8,6 +8,7 @@ use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
 use App\Form\DeveloperEditIntroFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,7 +101,29 @@ class DeveloperController extends AbstractController
 
         return new Response($this->twig->render('developer/candidates.html.twig',[
             'candidates'=> $candidates,
+            'developer'=> $developer
         ]));
+    }
+
+    /**
+     *  @Route("/developer/{slug}/candidate/{candidate_slug}/validate", name="developer_candidate_validate")
+     *  @ParamConverter("candidate", options={"mapping": {"candidate_slug": "slug"}})
+     */
+    public function developerCandidateValidate(Developer $developer, Candidate $candidate)
+    {   
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        if($user->getDeveloper() == $candidate->getDeveloper()) {
+            $this->candidateStateMachine->apply($candidate, 'validate');
+            $position = $candidate->getPosition();
+            $position->setUserId($developer->getId());
+            $entityManager = $this->getDoctrine()->getManager();
+            $this->entityManager->persist($position);
+            $this->entityManager->persist($candidate);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('developer',['slug' =>$developer->getSlug()]);
     }
   
 

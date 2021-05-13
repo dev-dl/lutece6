@@ -8,7 +8,7 @@
 
 
 		{% if workflow_can(candidate, 'validate')%}
-			<a href="">Validate</a> 
+			<a href =" {{ path('developer',{ slug: developer.slug}) }}/candidate/{{ candidate.slug }}/validate "> validate</a>
 		{% endif %}
     {% endfor %}
 
