@@ -74,9 +74,8 @@ class PositionController extends AbstractController
         $newCandidate->setPosition($position);
         $this->entityManager->persist($newCandidate);
         $this->entityManager->flush();
-        return new Response($this->twig->render('position/show.html.twig',[
-            'position' => $position,
-        ]));
+        return $this->redirectToRoute('project_index');
+
     }
 
 

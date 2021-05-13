@@ -28,11 +28,15 @@
                                 <a class="nav-link" href=" {{ path ('project_index')}}">projects</a>
                             </li>
                             <li>	
-                                <a class="nav-link" href="...">about <strike>us</strike> me</a>
+                                <a class="nav-link" href="path('developer')">about <strike>us</strike> me</a>
                             </li>
                             <li>
                                 <a class="nav-link" href=" {{ path('app_login')}} ">connexion</a>
                             </li>
+                            <li>
+                                <a class="nav-link" href=" {{ path('developer',{ slug: app.user.developer.slug})}} "> My dashbord</a>
+                            </li>
+                            
                         </ul>
                     </div>    
                 </nav>

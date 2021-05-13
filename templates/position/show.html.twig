@@ -8,6 +8,7 @@
 	{{ position.description}}
 
 
+    <a href = " {{ path('position',{ slug: position.slug} )}}/apply "> Apply</a>
     <a href =" {{ showCandidateURL }} ">{{ showCandidateText }} </a>
        
     {% for candidate in candidates %}

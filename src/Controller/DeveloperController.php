@@ -67,16 +67,16 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}/edit/intro", name="developer_edit_intro")
      */
-    public function developerEditIntro(Request $request,Developer $developer, DeveloperRepository $developerRepository)
+    public function developerEditIntro(Request $request,Developer $developer)
     {   
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         $user = $this->getUser();
-        $developerId = $user->getUserId();
-        $editDeveloperAccount =  $developerRepository->find($developerId);
+        $editDeveloperAccount =  $user->getDeveloper();
         $form = $this->createForm(DeveloperEditIntroFormType::class, $editDeveloperAccount);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $editDeveloperAccount->setSlug('-');
             $this->entityManager->persist($editDeveloperAccount);
             $this->entityManager->flush();
             return $this->redirectToRoute('developer',['slug' =>$editDeveloperAccount->getSlug()]);

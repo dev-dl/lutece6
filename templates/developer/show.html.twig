@@ -27,6 +27,9 @@
 			</div>
 		</div>
 
+
+		<a class="nav-link" href=" {{ path('developer_candidates', { slug: developer.slug})}} ">candidates</a>	
+		
 		{% for candidate in candidates %}
 			<h4> {{ candidate }} {{ candidate.position}}  {{ candidate.state }}</h4>
 
