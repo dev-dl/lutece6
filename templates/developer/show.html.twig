@@ -9,7 +9,7 @@
 	<div class="container-xl circle-img">
 		<div class="row">
 			<div class = "col-sm-1 h-100 text-center ">
-				<img class=" rounded-circle img-fluid photosize" src="/uploads/photos/lin.jpg" alt="..." >
+				<img class=" rounded-circle img-fluid photosize" src="/uploads/developer_photo/{{developer.photoFileName}}" alt="..." >
                 <a href =" {{ editIntroURL }} ">{{ edit }}</a>
 			</div>
 			<div class ="col-sm-5">
@@ -30,10 +30,6 @@
 
 		<a class="nav-link" href=" {{ path('developer_candidates', { slug: developer.slug})}} ">candidates</a>	
 		
-		{% for candidate in candidates %}
-			<h4> {{ candidate }} {{ candidate.position}}  {{ candidate.state }}</h4>
-
-    	{% endfor %}
 
 
 

@@ -8,6 +8,7 @@ use App\Repository\DeveloperRepository;
 use App\Repository\ProjectRepository;
 use App\Form\DeveloperEditIntroFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\Workflow\Exception\LogicException;
@@ -67,7 +68,7 @@ class DeveloperController extends AbstractController
     /**
      *  @Route("/developer/{slug}/edit/intro", name="developer_edit_intro")
      */
-    public function developerEditIntro(Request $request,Developer $developer)
+    public function developerEditIntro(Request $request,Developer $developer, string $developerPhotoDir)
     {   
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         $user = $this->getUser();
@@ -77,6 +78,15 @@ class DeveloperController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $editDeveloperAccount->setSlug('-');
+            if ($photo = $form['photoFileName']->getData()){
+                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                try{
+                    $photo->move($developerPhotoDir, $filename);
+                }catch (FileException $e){
+
+                }
+                $editDeveloperAccount->setPhotoFileName($filename);
+            }
             $this->entityManager->persist($editDeveloperAccount);
             $this->entityManager->flush();
             return $this->redirectToRoute('developer',['slug' =>$editDeveloperAccount->getSlug()]);
