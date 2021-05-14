@@ -33,9 +33,12 @@
                             <li>
                                 <a class="nav-link" href=" {{ path('app_login')}} ">connexion</a>
                             </li>
-                            <li>
-                                <a class="nav-link" href=" {{ path('developer_index')}} "> My dashbord</a>
-                            </li>
+
+                            {% if app.user %}
+                                <li>
+                                    <a class="nav-link" href=" {{ path('developer',{slug: developer.slug})}} "> My dashbord</a>
+                                </li>
+                            {% endif %}
                             
                         </ul>
                     </div>    
