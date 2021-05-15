@@ -17,7 +17,7 @@ local database: postgreSql
 - [x] create developer entity class and the database
 - [x] compute slug 
   - [x] slug = lastName + firstName+createdAt or emailadress+createdAt (if lasName & firstName == null)
-  - [ ] update slug (after adding lastName and firstName)
+  - [x] update slug (after adding lastName and firstName)
 - [x] developer personal page
 - [ ] deployment
   - [ ] PaaS
@@ -25,13 +25,15 @@ local database: postgreSql
     - [ ] <s>Platform.sh</s> -> Platform don't support docker, need to know more about PaaS
 - [x] register form
 - [x] login form
-- [ ] edit profil page
+- [x] edit profil page
+- [x] project owner : publish a job and accept a candidate
+- [x] developer : accept an offer
 
 ### database
 - [x] developer and developer_auths
   - [x] developer : user informations : lastName, firstName, profilImageName, description
   - [x] User_auths : userId, password, login with googlemail, facebook etc
-- [ ] project
+- [x] project
 - [ ] activity
 
 
