@@ -5,13 +5,15 @@ A plateform dedicated to beginners in web development, where you can create a pr
 
 First Version:
 
-<img src="https://raw.githubusercontent.com/dev-dl/lutece6/master/images_readme/developerPage.jpg" width="600" >
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/developerPage.jpg" width="600" >
 
 ## Using :
 PHP framwork : Symfony 5
 
 local database: postgreSql
 
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_db.jpg" width="600">
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_map_v1_20210515.jpg" width="600">
 ## To do list:
 ### functionality
 - [x] create developer entity class and the database
