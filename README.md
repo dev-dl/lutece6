@@ -14,6 +14,7 @@ local database: postgreSql
 
 <img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_db.jpg" width="600">
 <img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_map_v1_20210515.jpg" width="600">
+
 ## To do list:
 ### functionality
 - [x] create developer entity class and the database
