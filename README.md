@@ -5,15 +5,15 @@ A plateform dedicated to beginners in web development, where you can create a pr
 
 First Version:
 
-<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/developerPage.jpg" width="600" >
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/developerPage.jpg" width="500" >
 
 ## Using :
 PHP framwork : Symfony 5
 
 local database: postgreSql
 
-<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_db.jpg" width="600">
-<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_map_v1_20210515.jpg" width="600">
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_db.jpg" width="500">
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/lutece_map_v1_20210515.jpg" width="500">
 
 ## To do list:
 ### functionality
@@ -48,3 +48,8 @@ Books reading
 
 What it looks like now :
 https://github.com/dev-dl/symfony_project_lutece/tree/master/images_readme
+
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/login_form.gif" width="600">
+
+
+<img src="https://raw.githubusercontent.com/dev-dl/symfony_project/master/images_readme/register_form.gif" width="600">
